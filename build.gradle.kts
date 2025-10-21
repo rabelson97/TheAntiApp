@@ -25,4 +25,6 @@ dependencies {
 
     testImplementation(libs.ktor.server.tests.jvm)
     testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.auth0.java.jwt)
+    testImplementation(libs.koin.test.junit5)
 }

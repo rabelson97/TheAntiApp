@@ -16,17 +16,13 @@ fun Route.sessionRoutes() {
     authenticate("google-jwt") {
 
         post("/session/start") {
-            // The 'authenticate' block guarantees that the principal is not null.
-            // If the token was invalid, Ktor would have already sent a 401 Unauthorized response.
             val principal = call.principal<JWTPrincipal>()!!
-            val userId = principal.payload.subject
-
-            if (service.startSession(userId)) {
-                call.respond(HttpStatusCode.OK, "Session started for $userId.")
+            // Pass the entire principal to the service
+            if (service.startSession(principal)) {
+                call.respond(HttpStatusCode.OK, "Session started for ${principal.payload.subject}.")
             } else {
-                // This might happen if a user has a valid token but isn't in our DB yet.
-                // We'll handle user creation later.
-                call.respond(HttpStatusCode.NotFound, "User not found.")
+                // This now represents a more serious, unexpected error
+                call.respond(HttpStatusCode.InternalServerError, "Could not start session.")
             }
         }
 
