@@ -1,0 +1,2 @@
+### Start a session for our user
+POST http://localhost:8080/session/start

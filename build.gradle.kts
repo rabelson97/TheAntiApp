@@ -4,11 +4,11 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization)
 }
 
-group = "com.ra"
+group = "com.ra.antiapp"
 version = "0.0.1"
 
 application {
-    mainClass = "io.ktor.server.netty.EngineMain"
+    mainClass = "com.ra.antiapp.ApplicationKt"
 }
 
 dependencies {
@@ -17,6 +17,8 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)
-    testImplementation(libs.ktor.server.test.host)
+    implementation(libs.koin.ktor)
+    implementation(libs.koin.logging)
+    testImplementation(libs.ktor.server.tests.jvm)
     testImplementation(libs.kotlin.test.junit)
 }
