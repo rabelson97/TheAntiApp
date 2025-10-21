@@ -1,6 +1,7 @@
 package com.ra.antiapp
 
-import com.ra.antiapp.data.InMemoryUserRepository
+import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
+import com.ra.antiapp.data.DynamoDbUserRepository
 import com.ra.antiapp.data.UserRepository
 import com.ra.antiapp.leaderboard.LeaderboardService
 import com.ra.antiapp.leaderboard.leaderboardRoutes
@@ -22,29 +23,28 @@ fun main() {
         .start(wait = true)
 }
 
-// This is our Koin DI module. It's like a Dagger/Hilt module.
-// It tells Koin how to create instances of our classes.
+// This is the REAL DI module for your production application.
 val appModule = module {
-    single<UserRepository> { InMemoryUserRepository() } // When someone asks for a UserRepository, give them a single instance of InMemoryUserRepository.
-    single { LeaderboardService(get()) } // Koin will automatically provide the UserRepository dependency.
+    single { DynamoDbClient { region = "us-west-2" } } // Use your actual region
+    single<UserRepository> { DynamoDbUserRepository(get()) }
+    single { LeaderboardService(get()) }
     single { SessionService(get()) }
 }
 
 fun Application.module() {
-    // --- CONFIGURE PLUGINS ---
-    install(ContentNegotiation) {
-        json()
-    }
-
-    // Install the Koin plugin
+    // It installs Koin with the REAL database module...
     install(Koin) {
         slf4jLogger()
         modules(appModule)
     }
+    configurePlugins()
+}
 
+fun Application.configurePlugins() {
+    install(ContentNegotiation) {
+        json()
+    }
     configureSecurity()
-
-    // --- CONFIGURE ROUTING ---
     routing {
         leaderboardRoutes()
         sessionRoutes()

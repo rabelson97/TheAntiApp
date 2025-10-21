@@ -5,14 +5,14 @@ import kotlin.math.max
 
 class SessionService(private val userRepository: UserRepository) {
 
-    fun startSession(userId: String): Boolean {
+    suspend fun startSession(userId: String): Boolean {
         val user = userRepository.findUserById(userId) ?: return false
         user.currentSessionStartTime = System.currentTimeMillis()
         userRepository.save(user)
         return true
     }
 
-    fun endSession(userId: String): Long? {
+    suspend fun endSession(userId: String): Long? {
         val user = userRepository.findUserById(userId) ?: return null
         val startTime = user.currentSessionStartTime ?: return null // No active session
 

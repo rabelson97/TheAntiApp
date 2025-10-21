@@ -6,7 +6,7 @@ import com.ra.antiapp.data.UserRepository
 // It depends on the UserRepository to get its data.
 class LeaderboardService(private val userRepository: UserRepository) {
 
-    fun getLeaderboard(limit: Int = 20): List<LeaderboardEntry> {
+    suspend fun getLeaderboard(limit: Int = 20): List<LeaderboardEntry> {
         val topUsers = userRepository.getTopUsers(limit)
 
         // The "business logic" here is transforming the raw User data

@@ -21,6 +21,7 @@ dependencies {
     implementation(libs.koin.logging)
     implementation(libs.ktor.server.auth)
     implementation(libs.ktor.server.auth.jwt)
+    implementation(libs.aws.sdk.dynamodb)
 
     testImplementation(libs.ktor.server.tests.jvm)
     testImplementation(libs.kotlin.test.junit)

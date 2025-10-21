@@ -3,6 +3,7 @@ kotlin = "1.9.23"
 ktor = "2.3.11"
 logback = "1.5.6"
 koin = "3.5.0"
+awssdk = "1.1.2"
 
 [libraries]
 # Ktor Dependencies
@@ -20,10 +21,12 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
 koin-logging = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin" }
 
+# Database Management
+aws-sdk-dynamodb = { module = "aws.sdk.kotlin:dynamodb", version.ref = "awssdk" }
+
 # Testing Dependencies
 ktor-server-tests-jvm = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
