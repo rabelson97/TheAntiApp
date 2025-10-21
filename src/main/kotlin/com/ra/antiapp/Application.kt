@@ -4,6 +4,7 @@ import com.ra.antiapp.data.InMemoryUserRepository
 import com.ra.antiapp.data.UserRepository
 import com.ra.antiapp.leaderboard.LeaderboardService
 import com.ra.antiapp.leaderboard.leaderboardRoutes
+import com.ra.antiapp.plugins.configureSecurity
 import com.ra.antiapp.session.SessionService
 import com.ra.antiapp.session.sessionRoutes
 import io.ktor.serialization.kotlinx.json.*
@@ -40,6 +41,8 @@ fun Application.module() {
         slf4jLogger()
         modules(appModule)
     }
+
+    configureSecurity()
 
     // --- CONFIGURE ROUTING ---
     routing {

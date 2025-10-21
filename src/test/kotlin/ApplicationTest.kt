@@ -18,4 +18,13 @@ class ApplicationTest {
         assertEquals("application/json; charset=UTF-8", response.headers["Content-Type"])
         assert(response.bodyAsText().contains("Alice"))
     }
+
+    @Test
+    fun `test POST session-start fails without token`() = testApplication {
+        // The server is loaded automatically by application.conf
+        val response = client.post("/session/start")
+
+        // We EXPECT it to fail with 401 Unauthorized
+        assertEquals(HttpStatusCode.Unauthorized, response.status)
+    }
 }
